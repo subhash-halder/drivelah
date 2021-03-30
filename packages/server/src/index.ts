@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import fetchContactUs from './api/fetchContactUs';
+import downloadContactUs from './api/downloadContactUs';
 import insertContactUs from './api/insertContactUs';
 import { getClient } from './db/connection';
 import { createRequiredCollections } from './db/operations';
@@ -34,7 +34,7 @@ getClient()
     });
 
     app.get('/download-contactus', (req, res) => {
-      fetchContactUs(req, res, dependency);
+      downloadContactUs(req, res, dependency);
     });
 
     app.listen(port, () => {
