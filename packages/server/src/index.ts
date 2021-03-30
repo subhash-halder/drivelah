@@ -33,7 +33,7 @@ getClient()
       insertContactUs(req, res, dependency);
     });
 
-    app.get('/contactus', (req, res) => {
+    app.get('/download-contactus', (req, res) => {
       fetchContactUs(req, res, dependency);
     });
 

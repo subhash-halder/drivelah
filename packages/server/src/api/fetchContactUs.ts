@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
+import { Parser } from 'json2csv';
 import { getAllContactUsEntries } from '../db/operations';
+import { generateDateStr } from '../utils/date';
 import { logError } from '../utils/log';
 import { ApiResponse, Dependency, ResponseType } from '../utils/types';
 
@@ -12,10 +14,34 @@ export default async (req: Request, res: Response, dependency: Dependency): Prom
   };
   try {
     const list = await getAllContactUsEntries(dependency);
-    resp.status = ResponseType.success;
-    resp.data = {
-      list,
-    };
+    list.forEach((item) => {
+      item.date = generateDateStr(item.time);
+    });
+    const json2csv = new Parser({
+      fields: [
+        {
+          label: 'Name',
+          value: 'name',
+        },
+        {
+          label: 'Email',
+          value: 'email',
+        },
+        {
+          label: 'Message',
+          value: 'message',
+        },
+        {
+          label: 'Date Time',
+          value: 'date',
+        },
+      ],
+    });
+    const csv = json2csv.parse(list);
+    res.header('Content-Type', 'text/csv');
+    res.attachment('contactus.csv');
+    res.send(csv);
+    return;
   } catch (e) {
     logError(e);
   }
