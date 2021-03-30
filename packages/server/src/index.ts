@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import fetchContactUs from './api/fetchContactUs';
 import insertContactUs from './api/insertContactUs';
 import { getClient } from './db/connection';
@@ -7,6 +8,7 @@ import conf from './utils/config';
 import { Dependency } from './utils/types';
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 const port = conf.port || 8888;
 
