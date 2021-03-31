@@ -78,7 +78,6 @@ export default function SignIn() {
       validationError = true;
       setMessageError('Required');
     }
-    setLoader(false);
     if (!validationError) {
       axios({
         method: 'post',
@@ -103,7 +102,12 @@ export default function SignIn() {
         })
         .catch((e) => {
           setGlobalError(e.message);
+        })
+        .finally(() => {
+          setLoader(false);
         });
+    } else {
+      setLoader(false);
     }
   };
 
