@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import URI from '../../uri';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -57,8 +58,6 @@ export default function SignIn() {
   const [emailError, setEmailError] = React.useState('');
   const [messageError, setMessageError] = React.useState('');
 
-  const api = 'http://localhost:8888';
-
   const submitData = async () => {
     setLoader(true);
     setNameError('');
@@ -83,7 +82,7 @@ export default function SignIn() {
     if (!validationError) {
       axios({
         method: 'post',
-        url: `${api}/contactus`,
+        url: `${URI.serverBaseURL}/contactus`,
         data: {
           email,
           name,
